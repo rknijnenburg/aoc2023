@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.Text.RegularExpressions;
 
-namespace aoc2023.Day01
+namespace Aoc2023.Day01
 {
     internal class Trebuchet: IProblem
     {

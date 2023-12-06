@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic;
+﻿using System.Text.RegularExpressions;
 
-namespace aoc2023.Day04
+namespace Aoc2023.Day04
 {
     internal class Scratchcards: IProblem
     {

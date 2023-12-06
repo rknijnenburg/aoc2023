@@ -1,10 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using aoc2023;
 
-
-
-namespace aoc2023
+namespace Aoc2023
 {
     public partial class Program
     {
