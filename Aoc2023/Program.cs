@@ -47,7 +47,7 @@ namespace Aoc2023
             Solve<Day02.CubeConundrum>();
             Solve<Day03.GearRatios>();
             Solve<Day04.Scratchcards>();
-            //Solve<Day05.IfYouGiveASeedAFertilizer>();
+            Solve<Day05.IfYouGiveASeedAFertilizer>();
 
             Console.ReadKey();
         }
