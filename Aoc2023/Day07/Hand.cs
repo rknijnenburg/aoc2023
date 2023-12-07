@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aoc2023.Day05;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,21 +16,23 @@ namespace Aoc2023.Day07
 
         public int Strength { get; }
 
-        public Hand(string line)
+        public Hand(string line, bool jacksWild = false)
         {
             var parts = line.Split(" ");
 
             Bid = Convert.ToInt32(parts[1].Trim());
-            Cards = parts[0].Trim().Select(c => new Card(c)).ToArray();
+            Cards = parts[0].Trim().Select(c => new Card(c, jacksWild)).ToArray();
             
             Debug.Assert(Cards.Length == 5);
 
-            Strength = GetStrength(this);
+            Strength = GetStrength(this, jacksWild);
         }
 
-        public static int GetStrength(Hand h)
+        public static int GetStrength(Hand h, bool jacksWild)
         {
             var map = new Dictionary<int, int>();
+
+            map.Add(1, 0);
 
             foreach (var card in h.Cards)
             {
@@ -39,17 +42,25 @@ namespace Aoc2023.Day07
                 map[card.Value]++;
             }
                 
-            if (map.Values.Any(v => v == 5))
+            if (map.Any(p => p.Value == 5 || (jacksWild && p.Key != 1 && (p.Value + map[1]) == 5)))
                 return 6;
 
-            if (map.Values.Any(v => v == 4))
+            if (map.Any(p => p.Value == 4 || (jacksWild && p.Key != 1 && (p.Value + map[1]) == 4)))
                 return 5;
 
-            if (map.Values.Any(v => v == 3))
-                return map.Values.Any(v => v == 2) ? 4 : 3;
+            var pairs = map.Count(v => v.Value == 2);
 
-            if (map.Values.Any(v => v == 2))
-                return map.Values.Count(v => v == 2) == 2 ? 2 : 1;
+            if (map.Any(p => (p.Value == 3 && pairs == 1) || (jacksWild && p.Key != 1 && pairs == 2 && map[1] == 1)))
+                return 4;
+
+            if (map.Any(p => p.Value == 3 || (jacksWild && p.Key != 1 && (p.Value + map[1]) == 3)))
+                return 3;
+
+            if (pairs == 2)
+                return 2;
+
+            if (pairs == 1 || (jacksWild && map[1] == 1))
+                return 1;
 
             return 0;
         }

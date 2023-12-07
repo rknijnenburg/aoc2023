@@ -11,16 +11,17 @@ namespace Aoc2023.Day07
         public string Name => "Camel Cards";
         public int Day => 7;
 
-        private readonly Hand[] hands;
+        private readonly string[] input;
+        
         public CamelCards()
         {
-            var input = File.ReadAllLines("Day07/input.txt");
-
-            hands = input.Select(line => new Hand(line)).ToArray();
+            input = File.ReadAllLines("Day07/input.txt");
         }
 
         public string SolvePart1()
         {
+            var hands = input.Select(line => new Hand(line)).ToArray();
+
             Array.Sort(hands, new Sorter());
 
             return hands
@@ -31,7 +32,14 @@ namespace Aoc2023.Day07
 
         public string SolvePart2()
         {
-            return "TODO";
+            var hands = input.Select(line => new Hand(line, true)).ToArray();
+
+            Array.Sort(hands, new Sorter());
+
+            return hands
+                .Select((h, i) => h.Bid * (i + 1))
+                .Sum()
+                .ToString();
         }
     }
 }

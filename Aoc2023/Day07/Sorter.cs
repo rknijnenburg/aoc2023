@@ -13,15 +13,15 @@ namespace Aoc2023.Day07
             if (f?.Strength > s?.Strength)
                 return 1;
 
-            if (s?.Strength > f.Strength)
+            if (s?.Strength > f?.Strength)
                 return -1;
 
             for (int i = 0; i < f.Cards.Length; i++)
             {
-                if (f.Cards[i].Value > s.Cards[i].Value)
+                if (f?.Cards[i].Value > s?.Cards[i].Value)
                     return 1;
 
-                if (s.Cards[i].Value > f.Cards[i].Value)
+                if (s?.Cards[i].Value > f?.Cards[i].Value)
                     return -1;
             }
 

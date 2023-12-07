@@ -13,16 +13,19 @@ namespace Aoc2023.Day07
         public char Character { get; }
         public int Value { get; set; }
 
-        public Card(char c)
+        public Card(char c, bool jacksWild)
         {
             Character = c;
-            Value = GetValue(c);
+            Value = GetValue(c, jacksWild);
         }
 
-        public static int GetValue(char c)
+        public static int GetValue(char c, bool jacksWild)
         {
             if (char.IsDigit(c))
                 return c - '0';
+
+            if (jacksWild && c == 'J')
+                return 1;
 
             return 10 + characters.IndexOf(c);
         }
