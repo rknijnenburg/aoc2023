@@ -48,6 +48,7 @@ namespace Aoc2023
             Solve<Day03.GearRatios>();
             Solve<Day04.Scratchcards>();
             Solve<Day05.IfYouGiveASeedAFertilizer>();
+            Solve<Day06.WaitForIt>();
 
             Console.ReadKey();
         }

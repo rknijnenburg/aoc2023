@@ -2,9 +2,8 @@
 {
     public interface IProblem
     {
-        int Day { get; }
         string Name { get; }
-
+        int Day { get; }
         string SolvePart1();
         string SolvePart2();
     }
