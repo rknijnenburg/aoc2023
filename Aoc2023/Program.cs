@@ -15,17 +15,17 @@ namespace Aoc2023
 
             Console.Out.Write($"|{problem.Name,32}");
             Console.Out.Write($"|{problem.Day,4}");
-            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'fff}");
+            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'ffff}");
 
             stopwatch.Restart();
 
             Console.Out.Write($"|{problem.SolvePart1(),20}");
-            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'fff}");
+            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'ffff}");
 
             stopwatch.Restart();
 
             Console.Out.Write($"|{problem.SolvePart2(),20}");
-            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'fff}");
+            Console.Out.Write($"|{stopwatch.Elapsed,12:mm':'ss':'ffff}");
             Console.Out.Write("|");
             Console.Out.WriteLine();
         }
@@ -43,12 +43,13 @@ namespace Aoc2023
             Console.Out.WriteLine();
             Console.Out.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
-            Solve<Day01.Trebuchet>();
-            Solve<Day02.CubeConundrum>();
-            Solve<Day03.GearRatios>();
-            Solve<Day04.Scratchcards>();
-            Solve<Day05.IfYouGiveASeedAFertilizer>();
-            Solve<Day06.WaitForIt>();
+            //Solve<Day01.Trebuchet>();
+            //Solve<Day02.CubeConundrum>();
+            //Solve<Day03.GearRatios>();
+            //Solve<Day04.Scratchcards>();
+            //Solve<Day05.IfYouGiveASeedAFertilizer>();
+            //Solve<Day06.WaitForIt>();
+            Solve<Day07.CamelCards>();
 
             Console.ReadKey();
         }

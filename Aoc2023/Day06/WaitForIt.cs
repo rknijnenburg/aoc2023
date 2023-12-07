@@ -24,8 +24,6 @@ namespace Aoc2023.Day06
 
             times = regex.Matches(input[0]).Select(m => Convert.ToInt32(m.Value)).ToArray();
             distances = regex.Matches(input[1]).Select(m => Convert.ToInt32(m.Value)).ToArray();
-
-            
         }
 
         public string SolvePart1()
