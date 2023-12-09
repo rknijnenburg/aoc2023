@@ -43,13 +43,14 @@ namespace Aoc2023
             Console.Out.WriteLine();
             Console.Out.WriteLine("------------------------------------------------------------------------------------------------------------------------");
 
-            //Solve<Day01.Trebuchet>();
-            //Solve<Day02.CubeConundrum>();
-            //Solve<Day03.GearRatios>();
-            //Solve<Day04.Scratchcards>();
-            //Solve<Day05.IfYouGiveASeedAFertilizer>();
-            //Solve<Day06.WaitForIt>();
+            Solve<Day01.Trebuchet>();
+            Solve<Day02.CubeConundrum>();
+            Solve<Day03.GearRatios>();
+            Solve<Day04.Scratchcards>();
+            Solve<Day05.IfYouGiveASeedAFertilizer>();
+            Solve<Day06.WaitForIt>();
             Solve<Day07.CamelCards>();
+            Solve<Day08.HauntedWasteland>();
 
             Console.ReadKey();
         }
