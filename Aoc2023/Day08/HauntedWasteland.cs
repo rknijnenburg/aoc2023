@@ -78,51 +78,45 @@ namespace Aoc2023.Day08
 
         public string SolvePart2()
         {
-            var history = map.Where(e => e.Key.Last() == 'A').Select(e => new History(e.Value)).ToList();
+            var nodes = map.Where(e => e.Key.Last() == 'A').Select(e => e.Value).ToList();
+            var lcm = (long?)null;
             
-            foreach (var entry in history)
+            foreach (var entry in nodes)
             {
+                var current = entry;
+                var steps = 0L;
                 var finished = false;
 
                 while (!finished)
                 {
                     foreach (var instruction in instructions)
                     {
-                        entry.Step();
-                        entry.Current = instruction == 'L' ? entry.Current.Left : entry.Current.Right;
+                        steps++;
+                        current = instruction == 'L' ? current.Left : current.Right;
 
-                        if (entry.Current.Name.Last() == 'Z')
+                        if (current.Name.Last() == 'Z')
                         {
-                            if (entry.Found == null)
-                            {
-                                entry.Found = entry.Current;
-                            }
+                            if (lcm == null)
+                                lcm = steps;
                             else
-                            {
-                                finished = true;
+                                lcm = GetLeastCommonMultiple(lcm.Value, steps);
+                                    
+                            finished = true;
 
-                                break;
-                            }
+                            break;
                         }
                     }
                 }
             }
 
-            long memory = history[0].StepsFound;
-
-            foreach (var entry in history.Skip(1))
-            {
-                memory = GetLeastCommonMultiple(memory, entry.StepsFound);
-            }
-
-            return memory.ToString();
+            return lcm.Value.ToString();
         }
 
         static long GetGreatestCommonDivider(long a, long b)
         {
-             while (b != 0)
+            while (b != 0)
             {
-                long t = b;
+                var t = b;
                 b = a % b;
                 a = t;
             }
