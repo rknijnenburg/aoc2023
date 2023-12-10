@@ -8,6 +8,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Day10\**" />
+    <Compile Remove="Day11\**" />
+    <Compile Remove="Day12\**" />
+    <Compile Remove="Day13\**" />
+    <Compile Remove="Day14\**" />
+    <Compile Remove="Day15\**" />
+    <Compile Remove="Day16\**" />
+    <Compile Remove="Day17\**" />
+    <Compile Remove="Day18\**" />
+    <Compile Remove="Day19\**" />
+    <Compile Remove="Day20\**" />
+    <Compile Remove="Day21\**" />
+    <Compile Remove="Day22\**" />
+    <Compile Remove="Day23\**" />
+    <Compile Remove="Day24\**" />
+    <Compile Remove="Day25\**" />
+    <EmbeddedResource Remove="Day10\**" />
+    <EmbeddedResource Remove="Day11\**" />
+    <EmbeddedResource Remove="Day12\**" />
+    <EmbeddedResource Remove="Day13\**" />
+    <EmbeddedResource Remove="Day14\**" />
+    <EmbeddedResource Remove="Day15\**" />
+    <EmbeddedResource Remove="Day16\**" />
+    <EmbeddedResource Remove="Day17\**" />
+    <EmbeddedResource Remove="Day18\**" />
+    <EmbeddedResource Remove="Day19\**" />
+    <EmbeddedResource Remove="Day20\**" />
+    <EmbeddedResource Remove="Day21\**" />
+    <EmbeddedResource Remove="Day22\**" />
+    <EmbeddedResource Remove="Day23\**" />
+    <EmbeddedResource Remove="Day24\**" />
+    <EmbeddedResource Remove="Day25\**" />
+    <None Remove="Day10\**" />
+    <None Remove="Day11\**" />
+    <None Remove="Day12\**" />
+    <None Remove="Day13\**" />
+    <None Remove="Day14\**" />
+    <None Remove="Day15\**" />
+    <None Remove="Day16\**" />
+    <None Remove="Day17\**" />
+    <None Remove="Day18\**" />
+    <None Remove="Day19\**" />
+    <None Remove="Day20\**" />
+    <None Remove="Day21\**" />
+    <None Remove="Day22\**" />
+    <None Remove="Day23\**" />
+    <None Remove="Day24\**" />
+    <None Remove="Day25\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Day01\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -30,6 +81,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Day08\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Day09\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

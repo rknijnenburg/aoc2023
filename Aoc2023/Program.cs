@@ -51,6 +51,7 @@ namespace Aoc2023
             Solve<Day06.WaitForIt>();
             Solve<Day07.CamelCards>();
             Solve<Day08.HauntedWasteland>();
+            Solve<Day09.MirageMaintenance>();
 
             Console.ReadKey();
         }
