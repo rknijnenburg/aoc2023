@@ -1,23 +1,19 @@
-﻿using System.Drawing;
-using System.Linq;
-using System.Net.Security;
-using System.Runtime.CompilerServices;
-
-namespace Aoc2023.Day10
+﻿namespace Aoc2023.Day10
 {
     internal class PipeMaze: IProblem
     {
         public string Name => "Pipe Maze";
         public int Day => 10;
 
-        private readonly Tile start;
-
+        private readonly string[] input;
         private readonly Tile[][] grid;
-        private readonly List<Tile> tiles = new();
-        
+
+        private readonly Tile start;
+        private readonly int length;
+
         public PipeMaze()
         {
-            var input = File.ReadAllLines("Day10/input.txt");
+            input = File.ReadAllLines("Day10/input.txt");
 
             grid = new Tile[input.Length][];
 
@@ -27,7 +23,7 @@ namespace Aoc2023.Day10
 
                 for (var x = 0; x < input[y].Length; x++)
                 {
-                    var tile = new Tile(input, x, y);
+                    var tile = new Tile(input[y][x], x, y, GetConnections(x, y));
 
                     if (tile.C == 'S')
                     {
@@ -35,45 +31,30 @@ namespace Aoc2023.Day10
                         start.IsLoop = true;
                     }
 
-                    if (x > 0)
-                    {
-                        var left = grid[y][x - 1];
-                        tile.West = left;
-                        left.East = tile;
-                    }
-
-                    if (y > 0)
-                    {
-                        var top = grid[y - 1][x];
-                        tile.North = top;
-                        top.South = tile;
-                    }
-
                     grid[y][x] = tile;
-                    tiles.Add(tile);
                 }
             }
 
-            
+            if (start == null)
+                throw new ArgumentNullException();
 
-            var direction = this.start.Connections.First();
-            var current = this.start.GetNeighbor(direction);
-            var steps = 1;
+            var direction = start.Connections.First();
+            var current = GetNeighbor(start, direction) ?? throw new ArgumentNullException();
 
             while (current.X != start.X || current.Y != start.Y)
             {
-                steps++;
+                length++;
 
                 current.IsLoop = true;
 
                 direction = Next(current, direction);
-                current = current.GetNeighbor(direction);
+                current = GetNeighbor(current, direction) ?? throw new ArgumentNullException();
             }
         }
 
         public string SolvePart1()
         {
-            return (tiles.Count(t => t.IsLoop) / 2).ToString();
+            return (length / 2).ToString();
         }
 
         public string SolvePart2()
@@ -83,14 +64,14 @@ namespace Aoc2023.Day10
 
             for (int y = 0; y < grid.Length; y++)
             {
-                bool inside = false;
+                var inside = false;
                 var last = (Tile?) null;
 
                 for (int x = 0; x < grid[y].Length; x++)
                 {
                     var tile = grid[y][x];
 
-                    if (Toggle(tile, last, inside))
+                    if (IsTransition(tile, last))
                     {
                         inside = !inside;
                         last = tile;
@@ -104,7 +85,7 @@ namespace Aoc2023.Day10
             return count.ToString();
         }
 
-        private bool Toggle(Tile tile, Tile? last, bool testInside)
+        private bool IsTransition(Tile tile, Tile? last)
         {
             if (!tile.IsLoop)
                 return false;
@@ -112,25 +93,14 @@ namespace Aoc2023.Day10
             if (last == null)
                 return true;
 
-            var nst = tile.Connections.Where(c => c is Direction.North or Direction.South);
-            var ewt = tile.Connections.Where(c => c is Direction.East or Direction.West);
-
-            if (nst.Count() == 2)
+            if (tile.C == '|')
                 return true;
 
-            if (ewt.Count() == 2)
+            if (tile.C == '-')
                 return false;
 
             if (last.Connections.Contains(Direction.East) && tile.Connections.Contains(Direction.West))
-            {
-                return last.Connections.Any(l => nst.Contains(l));
-            }
-
-                //if (last.Connections.Count(c => tile.Connections.Contains(Opposite(c))) == 2)
-                //    return false;
-
-                //if (last.Connections.Count(c => tile.Connections.Contains(c)) == 2)
-                //    return false;
+                return last.Connections.Any(l => l is Direction.North or Direction.South && tile.Connections.Contains(l));
 
             return true;
         }
@@ -143,6 +113,66 @@ namespace Aoc2023.Day10
         private Direction Opposite(Direction d)
         {
             return (Direction) (((int)d + 6) % 4);
+        }
+
+        private Tile? GetNeighbor(Tile t, Direction d)
+        {
+            switch (d)
+            {
+                case Direction.North:
+                    return t.Y > 0 ? grid[t.Y - 1][t.X] : null;
+                case Direction.East:
+                    return t.X + 1 < grid[t.Y].Length ? grid[t.Y][t.X + 1] : null;
+                case Direction.South:
+                    return t.Y + 1 < grid.Length ? grid[t.Y + 1][t.X] : null;
+                case Direction.West:
+                    return t.X > 0 ? grid[t.Y][t.X - 1] : null;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(d), d, null);
+            }
+        }
+
+        private IEnumerable<Direction> GetConnections(int x, int y)
+        {
+            var c = input[y][x];
+
+            switch (c)
+            {
+                // vertical pipe connecting north and south
+                case '|':
+                    return new[] { Direction.North, Direction.South };
+                // horizontal pipe connecting east and west
+                case '-':
+                    return new[] { Direction.East, Direction.West };
+                // 90 - degree bend connecting north and east
+                case 'L':
+                    return new[] { Direction.North, Direction.East };
+                // 90 - degree bend connecting north and west
+                case 'J':
+                    return new[] { Direction.North, Direction.West };
+                // 90 - degree bend connecting south and west
+                case '7':
+                    return new[] { Direction.South, Direction.West };
+                // 90 - degree bend connecting south and east
+                case 'F':
+                    return new[] { Direction.South, Direction.East };
+                // ground; there is no pipe in this tile
+                case '.':
+                    return Array.Empty<Direction>();
+                case 'S':
+                    var list = new List<Direction>();
+                    if (y > 0 && GetConnections(x, y - 1).Contains(Direction.South))
+                        list.Add(Direction.North);
+                    if (y + 1 < input.Length && GetConnections(x, y + 1).Contains(Direction.North))
+                        list.Add(Direction.South);
+                    if (x > 0 && GetConnections(x - 1, y).Contains(Direction.East))
+                        list.Add(Direction.West);
+                    if (x + 1 < input[y].Length && GetConnections(x + 1, y).Contains(Direction.West))
+                        list.Add(Direction.East);
+                    return list.ToArray();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(c), c, null);
+            }
         }
     }
 }
