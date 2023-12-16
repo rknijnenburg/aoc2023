@@ -96,10 +96,7 @@ namespace Aoc2023.Day08
 
                         if (current.Name.Last() == 'Z')
                         {
-                            if (lcm == null)
-                                lcm = steps;
-                            else
-                                lcm = GetLeastCommonMultiple(lcm.Value, steps);
+                            lcm = lcm == null ? steps : GetLeastCommonMultiple(lcm.Value, steps);
                                     
                             finished = true;
 

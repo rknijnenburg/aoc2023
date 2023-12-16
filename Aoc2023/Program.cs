@@ -7,7 +7,7 @@ namespace Aoc2023
         private static readonly Stopwatch stopwatch = Stopwatch.StartNew();
 
         private static void Solve<TProblem>()
-            where TProblem: IProblem
+            where TProblem : IProblem
         {
             stopwatch.Restart();
 
@@ -41,7 +41,8 @@ namespace Aoc2023
             Console.Out.Write($"|{"Elapsed",12}");
             Console.Out.Write("|");
             Console.Out.WriteLine();
-            Console.Out.WriteLine("------------------------------------------------------------------------------------------------------------------------");
+            Console.Out.WriteLine(
+                "------------------------------------------------------------------------------------------------------------------------");
 
             Solve<Day01.Trebuchet>();
             Solve<Day02.CubeConundrum>();
@@ -53,6 +54,7 @@ namespace Aoc2023
             Solve<Day08.HauntedWasteland>();
             Solve<Day09.MirageMaintenance>();
             Solve<Day10.PipeMaze>();
+            Solve<Day11.CosmicExpansion>();
 
             Console.ReadKey();
         }
