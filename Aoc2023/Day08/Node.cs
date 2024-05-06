@@ -12,8 +12,8 @@ namespace Aoc2023.Day08
     internal class Node
     {
         public string Name { get; }
-        public Node Left { get; set; }
-        public Node Right { get; set; }
+        public Node? Left { get; set; }
+        public Node? Right { get; set; }
 
         public Node(string name)
         {

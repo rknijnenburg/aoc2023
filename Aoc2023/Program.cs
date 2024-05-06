@@ -55,6 +55,7 @@ namespace Aoc2023
             Solve<Day09.MirageMaintenance>();
             Solve<Day10.PipeMaze>();
             Solve<Day11.CosmicExpansion>();
+            Solve<Day12.HotSprings>();
 
             Console.ReadKey();
         }

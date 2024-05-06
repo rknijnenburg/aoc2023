@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Day12\**" />
     <Compile Remove="Day13\**" />
     <Compile Remove="Day14\**" />
     <Compile Remove="Day15\**" />
@@ -22,7 +21,6 @@
     <Compile Remove="Day23\**" />
     <Compile Remove="Day24\**" />
     <Compile Remove="Day25\**" />
-    <EmbeddedResource Remove="Day12\**" />
     <EmbeddedResource Remove="Day13\**" />
     <EmbeddedResource Remove="Day14\**" />
     <EmbeddedResource Remove="Day15\**" />
@@ -36,7 +34,6 @@
     <EmbeddedResource Remove="Day23\**" />
     <EmbeddedResource Remove="Day24\**" />
     <EmbeddedResource Remove="Day25\**" />
-    <None Remove="Day12\**" />
     <None Remove="Day13\**" />
     <None Remove="Day14\**" />
     <None Remove="Day15\**" />
@@ -63,7 +60,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Day04\input.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Day05\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -84,6 +81,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Day11\input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Day12\input.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
