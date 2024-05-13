@@ -57,6 +57,7 @@ namespace Aoc2023
             Solve<Day11.CosmicExpansion>();
             Solve<Day12.HotSprings>();
             Solve<Day13.PointOfIncidence>();
+            Solve<Day14.ParabolicReflectorDish>();
 
             Console.ReadKey();
         }
