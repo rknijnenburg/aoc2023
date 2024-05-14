@@ -58,6 +58,7 @@ namespace Aoc2023
             Solve<Day12.HotSprings>();
             Solve<Day13.PointOfIncidence>();
             Solve<Day14.ParabolicReflectorDish>();
+            Solve<Day15.LensLibrary>();
 
             Console.ReadKey();
         }
