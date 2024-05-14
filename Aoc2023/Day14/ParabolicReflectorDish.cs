@@ -11,17 +11,6 @@ using System.Threading.Tasks;
 
 namespace Aoc2023.Day14
 {
-    internal static class Temp
-    {
-        public static bool Compare<T>(this T[,] firstArray, T[,] secondArray)
-        {
-            //from https://github.com/mohammedsouleymane/AdventOfCode/blob/main/AdventOfCode/Utilities/Util.cs
-            return firstArray.Rank == secondArray.Rank &&
-                   Enumerable.Range(0, firstArray.Rank).All(dimension => firstArray.GetLength(dimension) == secondArray.GetLength(dimension)) &&
-                   firstArray.Cast<T>().SequenceEqual(secondArray.Cast<T>());
-        }
-    }
-
     internal class ParabolicReflectorDish: IProblem
     {
         public string Name => "Parabolic Reflector Dish";
@@ -36,7 +25,9 @@ namespace Aoc2023.Day14
 
         public string SolvePart1()
         {
-            var result = Tilt(input);
+            var result = input.Clone() as char[][];
+
+            TiltNorth(result);
             
             return Score(result).ToString();
         }
@@ -44,13 +35,11 @@ namespace Aoc2023.Day14
         public string SolvePart2()
         {
             var history = new List<string>();
-            var result = input;
-            
+            var result = input.Clone() as char[][];
+
             for (var i = 0; i < 1000000000; i++)
             {
-                result = Cycle(result);
-
-                var test = Score(result);
+                Cycle(result);
 
                 var key = ToString(result);
 
@@ -68,9 +57,7 @@ namespace Aoc2023.Day14
 
             return "NA";
         }
-
-
-
+        
         private string ToString(char[][] platform)
         {
             return string.Join(Environment.NewLine, platform.Select(c => string.Join("", c)));
@@ -97,43 +84,34 @@ namespace Aoc2023.Day14
             return sum;
         }
 
-        private char[][] Cycle(char[][] platform)
+        private void Cycle(char[][] platform)
         {
-            var result = platform;
-
-            for (var d = 0; d < 4; d++)
-            {
-                result = Tilt(result);
-                result = Rotate(result);
-            }
-                
-
-            return result;
+            foreach (var direction in Enum.GetValues(typeof(Direction)).Cast<Direction>())
+                Tilt(platform, direction);
         }
 
-        private char[][] Rotate(char[][] platform)
+        private void Tilt(char[][] platform, Direction direction)
         {
-            var result = new char[platform[0].Length][];
-
-            for (var y = 0; y < platform.Length; y++)
+            switch (direction)
             {
-                for (var x = 0; x < platform[0].Length; x++)
-                {
-                    if (result[x] == null)
-                        result[x] = new char[platform.Length];
-
-                    var ny = x;
-                    var nx = result.Length - 1 - y;
-
-                    result[ny][nx] = platform[y][x];
-                }
+                case Direction.North:
+                    TiltNorth(platform);
+                    break;
+                case Direction.West:
+                    TiltWest(platform);
+                    break;
+                case Direction.South:
+                    TiltSouth(platform);
+                    break;
+                case Direction.East:
+                    TiltEast(platform);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-
-            return result;
         }
 
-        private char[][] Tilt(char[][] platform)
+        private void TiltNorth(char[][] platform)
         {
             for (int y = 1; y < platform.Length; y++)
             {
@@ -141,16 +119,75 @@ namespace Aoc2023.Day14
                 {
                     for (int v = y; v > 0; v--)
                     {
-                        if (platform[v][x] == 'O' && platform[v - 1][x] == '.')
-                        {
-                            platform[v][x] = '.';
-                            platform[v - 1][x] = 'O';
-                        }
+                        if (!IsSwap(platform, v, x, v - 1, x))
+                            break;
+
+                        Swap(platform, v, x, v - 1, x);
                     }
                 }
             }
+        }
 
-            return platform;
+        private void TiltSouth(char[][] platform)
+        {
+            for (int y = platform.Length - 2; y >= 0; y--)
+            {
+                for (int x = 0; x < platform[y].Length; x++)
+                {
+                    for (int v = y; v < platform.Length - 1; v++)
+                    {
+                        if (!IsSwap(platform, v, x, v + 1, x))
+                            break;
+
+                        Swap(platform, v, x, v + 1, x);
+                    }
+                }
+            }
+        }
+
+        private void TiltWest(char[][] platform)
+        {
+            for (int y = 0; y < platform.Length; y++)
+            {
+                for (int x = 1; x < platform[y].Length; x++)
+                {
+                    for (int v = x; v > 0; v--)
+                    {
+                        if (!IsSwap(platform, y, v, y, v - 1))
+                            break;
+
+                        Swap(platform, y, v, y, v - 1);
+                    }
+                }
+            }
+        }
+
+        private void TiltEast(char[][] platform)
+        {
+            for (int y = 0; y < platform.Length; y++)
+            {
+                for (int x = platform[y].Length - 2; x >= 0; x--)
+                {
+                    for (int v = x; v < platform[y].Length - 1; v++)
+                    {
+                        if (!IsSwap(platform, y, v, y, v + 1))
+                            break;
+
+                        Swap(platform, y, v, y, v + 1);
+                    }
+                }
+            }
+        }
+
+        private bool IsSwap(char[][] platform, int sy, int sx, int dy, int dx)
+        {
+            return platform[sy][sx] == 'O' && platform[dy][dx] == '.';
+        }
+
+        private void Swap(char[][] platform, int sy, int sx, int dy, int dx)
+        {
+            platform[sy][sx] = '.';
+            platform[dy][dx] = 'O';
         }
     }
 }
